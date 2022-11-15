@@ -21,7 +21,7 @@ dependencies:
   #################
 
   #BSD
-  dart_jts: ^0.2.0
+  dart_jts: ^0.2.1+1
     # path: ../dart_jts/
   #    git:
   #      url: https://github.com/moovida/dart_jts.git

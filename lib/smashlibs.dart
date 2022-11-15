@@ -35,7 +35,7 @@ import 'package:wkt_parser/wkt_parser.dart' as wkt_parser;
 
 part 'com/hydrologis/dartlibs/dartlibs.dart';
 part 'com/hydrologis/flutterlibs/camera/camera.dart';
-part 'com/hydrologis/flutterlibs/gps/gps.dart';
+// part 'com/hydrologis/flutterlibs/gps/gps.dart';
 part 'com/hydrologis/flutterlibs/filesystem/filemanagement.dart';
 part 'com/hydrologis/flutterlibs/filesystem/workspace.dart';
 part 'com/hydrologis/flutterlibs/forms/forms.dart';

@@ -1,4 +1,6 @@
-part of smashlibs;
+// part of smashlibs;
+import 'dart:async';
+import 'package:smashlibs/smashlibs.dart';
 
 enum GpsStatus { NOGPS, OFF, NOPERMISSION, ON_NO_FIX, ON_WITH_FIX, LOGGING }
 
