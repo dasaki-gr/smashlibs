@@ -56,7 +56,7 @@ part 'smash/flutterlibs/utils/permissions.dart';
 part 'smash/flutterlibs/utils/preferences.dart';
 part 'smash/flutterlibs/utils/projection.dart';
 part 'smash/flutterlibs/utils/screen.dart';
-part 'smash/flutterlibs/utils/notifier.dart';
+// part 'smash/flutterlibs/utils/notifier.dart';
 part 'smash/flutterlibs/utils/share.dart';
 part 'smash/flutterlibs/utils/validators.dart';
 part 'smash/flutterlibs/projectdb/project_db.dart';

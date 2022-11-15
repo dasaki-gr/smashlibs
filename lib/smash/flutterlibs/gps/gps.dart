@@ -1,249 +1,250 @@
-// part of smashlibs;
-import 'dart:async';
-import 'package:smashlibs/smashlibs.dart';
+// // part of smashlibs;
+// import 'dart:async';
+// import 'package:smashlibs/smashlibs.dart';
 
-enum GpsStatus { NOGPS, OFF, NOPERMISSION, ON_NO_FIX, ON_WITH_FIX, LOGGING }
 
-const String ARG_LATITUDE = 'latitude';
-const String ARG_LONGITUDE = 'longitude';
-const String ARG_ACCURACY = 'accuracy';
-const String ARG_ALTITUDE = 'altitude';
-const String ARG_SPEED = 'speed';
-const String ARG_SPEED_ACCURACY = 'speed_accuracy';
-const String ARG_HEADING = 'heading';
-const String ARG_TIME = 'time';
-const String ARG_MOCKED = 'mocked';
-const String ARG_LATITUDE_FILTERED = 'latitude_filtered';
-const String ARG_LONGITUDE_FILTERED = 'longitude_filtered';
-const String ARG_ACCURACY_FILTERED = 'accuracy_filtered';
+// enum GpsStatus { NOGPS, OFF, NOPERMISSION, ON_NO_FIX, ON_WITH_FIX, LOGGING }
 
-const String KEY_DO_NOTE_IN_GPS = "KEY_DO_NOTE_IN_GPS_MODE";
-const int POINT_INSERTION_MODE_GPS = 0;
-const int POINT_INSERTION_MODE_MAPCENTER = 1;
+// const String ARG_LATITUDE = 'latitude';
+// const String ARG_LONGITUDE = 'longitude';
+// const String ARG_ACCURACY = 'accuracy';
+// const String ARG_ALTITUDE = 'altitude';
+// const String ARG_SPEED = 'speed';
+// const String ARG_SPEED_ACCURACY = 'speed_accuracy';
+// const String ARG_HEADING = 'heading';
+// const String ARG_TIME = 'time';
+// const String ARG_MOCKED = 'mocked';
+// const String ARG_LATITUDE_FILTERED = 'latitude_filtered';
+// const String ARG_LONGITUDE_FILTERED = 'longitude_filtered';
+// const String ARG_ACCURACY_FILTERED = 'accuracy_filtered';
 
-class SmashPosition {
-  bool mocked = false;
-  late double filteredLatitude;
-  late double filteredLongitude;
-  late double filteredAccuracy;
+// const String KEY_DO_NOTE_IN_GPS = "KEY_DO_NOTE_IN_GPS_MODE";
+// const int POINT_INSERTION_MODE_GPS = 0;
+// const int POINT_INSERTION_MODE_MAPCENTER = 1;
 
-  late double _latitude;
-  late double _longitude;
-  double _altitude = -1.0;
-  double _heading = -1.0;
-  late double _time;
-  double _accuracy = -1.0;
-  double _speed = -1.0;
-  double _speedAccuracy = -1.0;
+// class SmashPosition {
+//   bool mocked = false;
+//   late double filteredLatitude;
+//   late double filteredLongitude;
+//   late double filteredAccuracy;
 
-  SmashPosition.fromLocation(var location,
-      {required this.filteredLatitude,
-      required this.filteredLongitude,
-      required this.filteredAccuracy}) {
-    _latitude = location.latitude;
-    _longitude = location.longitude;
-    _accuracy = location.accuracy;
-    _altitude = location.altitude;
-    _speed = location.speed;
-    _speedAccuracy = location.speedAccuracy;
-    _heading = location.heading;
-    _time = location.time;
-  }
+//   late double _latitude;
+//   late double _longitude;
+//   double _altitude = -1.0;
+//   double _heading = -1.0;
+//   late double _time;
+//   double _accuracy = -1.0;
+//   double _speed = -1.0;
+//   double _speedAccuracy = -1.0;
 
-  SmashPosition.fromJson(Map<String, dynamic> json) {
-    _latitude = json[ARG_LATITUDE];
-    _longitude = json[ARG_LONGITUDE];
-    _altitude = json[ARG_ALTITUDE];
-    _heading = json[ARG_HEADING];
-    _accuracy = json[ARG_ACCURACY];
-    _time = json[ARG_TIME];
-    _speed = json[ARG_SPEED];
-    _speedAccuracy = json[ARG_SPEED_ACCURACY];
+//   SmashPosition.fromLocation(var location,
+//       {required this.filteredLatitude,
+//       required this.filteredLongitude,
+//       required this.filteredAccuracy}) {
+//     _latitude = location.latitude;
+//     _longitude = location.longitude;
+//     _accuracy = location.accuracy;
+//     _altitude = location.altitude;
+//     _speed = location.speed;
+//     _speedAccuracy = location.speedAccuracy;
+//     _heading = location.heading;
+//     _time = location.time;
+//   }
 
-    mocked = json[ARG_MOCKED];
-    filteredLatitude = json[ARG_LATITUDE_FILTERED];
-    filteredLongitude = json[ARG_LONGITUDE_FILTERED];
-    filteredAccuracy = json[ARG_ACCURACY_FILTERED];
-  }
+//   SmashPosition.fromJson(Map<String, dynamic> json) {
+//     _latitude = json[ARG_LATITUDE];
+//     _longitude = json[ARG_LONGITUDE];
+//     _altitude = json[ARG_ALTITUDE];
+//     _heading = json[ARG_HEADING];
+//     _accuracy = json[ARG_ACCURACY];
+//     _time = json[ARG_TIME];
+//     _speed = json[ARG_SPEED];
+//     _speedAccuracy = json[ARG_SPEED_ACCURACY];
 
-  SmashPosition.fromCoords(double lon, double lat, double time) {
-    _latitude = lat;
-    _longitude = lon;
-    _altitude = -1.0;
-    _heading = -1.0;
-    _time = time;
-    _accuracy = -1.0;
-    _speed = -1.0;
-    _speedAccuracy = -1.0;
-  }
+//     mocked = json[ARG_MOCKED];
+//     filteredLatitude = json[ARG_LATITUDE_FILTERED];
+//     filteredLongitude = json[ARG_LONGITUDE_FILTERED];
+//     filteredAccuracy = json[ARG_ACCURACY_FILTERED];
+//   }
 
-  double get latitude => _latitude;
-  double get longitude => _longitude;
-  double get accuracy => _accuracy;
+//   SmashPosition.fromCoords(double lon, double lat, double time) {
+//     _latitude = lat;
+//     _longitude = lon;
+//     _altitude = -1.0;
+//     _heading = -1.0;
+//     _time = time;
+//     _accuracy = -1.0;
+//     _speed = -1.0;
+//     _speedAccuracy = -1.0;
+//   }
 
-  double get altitude => _altitude;
-  double get speed => _speed;
-  double get speedAccuracy => _speedAccuracy;
-  double get heading => _heading;
-  double get time => _time;
+//   double get latitude => _latitude;
+//   double get longitude => _longitude;
+//   double get accuracy => _accuracy;
 
-  @override
-  String toString() {
-    return """SmashPosition{
-      latitude: $_latitude, 
-      longitude: $_longitude, 
-      accuracy: $_accuracy, 
-      altitude: $_altitude, 
-      speed: $_speed, 
-      speedAccuracy: $_speedAccuracy, 
-      heading: $_heading, 
-      time: $_time
-    }""";
-  }
-}
+//   double get altitude => _altitude;
+//   double get speed => _speed;
+//   double get speedAccuracy => _speedAccuracy;
+//   double get heading => _heading;
+//   double get time => _time;
 
-/// Current Gps Status.
-///
-/// Provides tracking of position and parameters related to GPS state.
-class GpsState extends ChangeNotifierPlus {
-  GpsStatus _status = GpsStatus.NOGPS;
-  SmashPosition? _lastPosition;
+//   @override
+//   String toString() {
+//     return """SmashPosition{
+//       latitude: $_latitude, 
+//       longitude: $_longitude, 
+//       accuracy: $_accuracy, 
+//       altitude: $_altitude, 
+//       speed: $_speed, 
+//       speedAccuracy: $_speedAccuracy, 
+//       heading: $_heading, 
+//       time: $_time
+//     }""";
+//   }
+// }
 
-  /// the gps insertion mode for notes. This can be GPS or map center.
-  int _insertInGpsMode = POINT_INSERTION_MODE_GPS;
+// /// Current Gps Status.
+// ///
+// /// Provides tracking of position and parameters related to GPS state.
+// class GpsState extends ChangeNotifierPlus {
+//   GpsStatus _status = GpsStatus.NOGPS;
+//   SmashPosition? _lastPosition;
 
-  /// Use the iltered GPS instead of the original GPS.
-  bool? _useFilteredGps;
+//   /// the gps insertion mode for notes. This can be GPS or map center.
+//   int _insertInGpsMode = POINT_INSERTION_MODE_GPS;
 
-  int gpsMinDistance = 1;
-  int gpsTimeInterval = 1;
-  bool doTestLog = false;
+//   /// Use the iltered GPS instead of the original GPS.
+//   bool? _useFilteredGps;
 
-  late String logMode;
-  late String filteredLogMode;
-  late String notesMode;
+//   int gpsMinDistance = 1;
+//   int gpsTimeInterval = 1;
+//   bool doTestLog = false;
 
-  Map<String, Timer> _gpsTimers = {};
+//   late String logMode;
+//   late String filteredLogMode;
+//   late String notesMode;
 
-  void init() {
-    gpsMinDistance = GpPreferences()
-            .getIntSync(SmashPreferencesKeys.KEY_GPS_MIN_DISTANCE, 1) ??
-        1;
-    gpsTimeInterval = GpPreferences()
-            .getIntSync(SmashPreferencesKeys.KEY_GPS_TIMEINTERVAL, 1) ??
-        1;
-    doTestLog = GpPreferences()
-        .getBooleanSync(SmashPreferencesKeys.KEY_GPS_TESTLOG, false);
+//   Map<String, Timer> _gpsTimers = {};
 
-    List<String> currentLogViewModes = GpPreferences().getStringListSync(
-            SmashPreferencesKeys.KEY_GPS_LOG_VIEW_MODE, [
-          SmashPreferencesKeys.LOGVIEWMODES[0],
-          SmashPreferencesKeys.LOGVIEWMODES[1]
-        ]) ??
-        [
-          SmashPreferencesKeys.LOGVIEWMODES[0],
-          SmashPreferencesKeys.LOGVIEWMODES[1]
-        ];
-    logMode = currentLogViewModes[0];
-    filteredLogMode = currentLogViewModes[1];
-    notesMode = GpPreferences().getStringSync(
-            SmashPreferencesKeys.KEY_NOTES_VIEW_MODE,
-            SmashPreferencesKeys.NOTESVIEWMODES[0]) ??
-        SmashPreferencesKeys.NOTESVIEWMODES[0];
-  }
+//   void init() {
+//     gpsMinDistance = GpPreferences()
+//             .getIntSync(SmashPreferencesKeys.KEY_GPS_MIN_DISTANCE, 1) ??
+//         1;
+//     gpsTimeInterval = GpPreferences()
+//             .getIntSync(SmashPreferencesKeys.KEY_GPS_TIMEINTERVAL, 1) ??
+//         1;
+//     doTestLog = GpPreferences()
+//         .getBooleanSync(SmashPreferencesKeys.KEY_GPS_TESTLOG, false);
 
-  GpsStatus get status => _status;
+//     List<String> currentLogViewModes = GpPreferences().getStringListSync(
+//             SmashPreferencesKeys.KEY_GPS_LOG_VIEW_MODE, [
+//           SmashPreferencesKeys.LOGVIEWMODES[0],
+//           SmashPreferencesKeys.LOGVIEWMODES[1]
+//         ]) ??
+//         [
+//           SmashPreferencesKeys.LOGVIEWMODES[0],
+//           SmashPreferencesKeys.LOGVIEWMODES[1]
+//         ];
+//     logMode = currentLogViewModes[0];
+//     filteredLogMode = currentLogViewModes[1];
+//     notesMode = GpPreferences().getStringSync(
+//             SmashPreferencesKeys.KEY_NOTES_VIEW_MODE,
+//             SmashPreferencesKeys.NOTESVIEWMODES[0]) ??
+//         SmashPreferencesKeys.NOTESVIEWMODES[0];
+//   }
 
-  SmashPosition? get lastGpsPosition => _lastPosition;
+//   GpsStatus get status => _status;
 
-  set lastGpsPosition(SmashPosition? position) {
-    _lastPosition = position;
-    notifyListeners(); //Msg("lastGpsPosition");
-  }
+//   SmashPosition? get lastGpsPosition => _lastPosition;
 
-  set lastGpsPositionQuiet(SmashPosition position) {
-    _lastPosition = position;
-  }
+//   set lastGpsPosition(SmashPosition? position) {
+//     _lastPosition = position;
+//     notifyListeners(); //Msg("lastGpsPosition");
+//   }
 
-  /// Set the status without triggering a global notification.
-  set statusQuiet(GpsStatus newStatus) {
-    _status = newStatus;
-  }
+//   set lastGpsPositionQuiet(SmashPosition position) {
+//     _lastPosition = position;
+//   }
 
-  set status(GpsStatus newStatus) {
-    if (_status != newStatus) {
-      _status = newStatus;
-      notifyListeners(); //Msg("status");
-    }
-  }
+//   /// Set the status without triggering a global notification.
+//   set statusQuiet(GpsStatus newStatus) {
+//     _status = newStatus;
+//   }
 
-  int get insertInGpsMode => _insertInGpsMode;
+//   set status(GpsStatus newStatus) {
+//     if (_status != newStatus) {
+//       _status = newStatus;
+//       notifyListeners(); //Msg("status");
+//     }
+//   }
 
-  bool get useFilteredGps {
-    if (_useFilteredGps == null) {
-      _useFilteredGps = GpPreferences().getBooleanSync(
-          SmashPreferencesKeys.KEY_GPS_USE_FILTER_GENERALLY, false);
-    }
-    return _useFilteredGps!;
-  }
+//   int get insertInGpsMode => _insertInGpsMode;
 
-  /// Set the _insertInGps without triggering a global notification.
-  set useFilteredGpsQuiet(bool newUseFilteredGps) {
-    _useFilteredGps = newUseFilteredGps;
-  }
+//   bool get useFilteredGps {
+//     if (_useFilteredGps == null) {
+//       _useFilteredGps = GpPreferences().getBooleanSync(
+//           SmashPreferencesKeys.KEY_GPS_USE_FILTER_GENERALLY, false);
+//     }
+//     return _useFilteredGps!;
+//   }
 
-  /// Set the _insertInGps without triggering a global notification.
-  set insertInGpsQuiet(int newInsertInGpsMode) {
-    if (_insertInGpsMode != newInsertInGpsMode) {
-      _insertInGpsMode = newInsertInGpsMode;
-    }
-  }
+//   /// Set the _insertInGps without triggering a global notification.
+//   set useFilteredGpsQuiet(bool newUseFilteredGps) {
+//     _useFilteredGps = newUseFilteredGps;
+//   }
 
-  set insertInGpsMode(int newInsertInGpsMode) {
-    if (_insertInGpsMode != newInsertInGpsMode) {
-      insertInGpsQuiet = newInsertInGpsMode;
-      notifyListenersMsg("insertInGps");
-    }
-  }
+//   /// Set the _insertInGps without triggering a global notification.
+//   set insertInGpsQuiet(int newInsertInGpsMode) {
+//     if (_insertInGpsMode != newInsertInGpsMode) {
+//       _insertInGpsMode = newInsertInGpsMode;
+//     }
+//   }
 
-  bool hasFix() {
-    return _status == GpsStatus.ON_WITH_FIX || _status == GpsStatus.LOGGING;
-  }
+//   set insertInGpsMode(int newInsertInGpsMode) {
+//     if (_insertInGpsMode != newInsertInGpsMode) {
+//       insertInGpsQuiet = newInsertInGpsMode;
+//       notifyListenersMsg("insertInGps");
+//     }
+//   }
 
-  /// Add a new gps position based timer to the gps model.
-  ///
-  /// The [tag] is used to keep track of the timer and cancel it.
-  /// The [timerFunction] is run in the timer and is supplied with
-  /// a [SmashPosition] and [GpsStatus] object.
-  /// An optional [durationSeconds] can be supplied. 60 seconds i the default.
-  void addGpsTimer(String tag, Function timerFunction,
-      {int durationSeconds = 60}) {
-    var timer = _gpsTimers.remove(tag);
-    if (timer != null) {
-      timer.cancel();
-    }
-    var newTimer =
-        Timer.periodic(Duration(seconds: durationSeconds), (timer) async {
-      await timerFunction(_lastPosition, _status);
-    });
-    _gpsTimers[tag] = newTimer;
-  }
+//   bool hasFix() {
+//     return _status == GpsStatus.ON_WITH_FIX || _status == GpsStatus.LOGGING;
+//   }
 
-  /// Cancel a timer using its [tag].
-  void stopGpsTimer(String tag) {
-    var timer = _gpsTimers.remove(tag);
-    if (timer != null) {
-      timer.cancel();
-    }
-  }
+//   /// Add a new gps position based timer to the gps model.
+//   ///
+//   /// The [tag] is used to keep track of the timer and cancel it.
+//   /// The [timerFunction] is run in the timer and is supplied with
+//   /// a [SmashPosition] and [GpsStatus] object.
+//   /// An optional [durationSeconds] can be supplied. 60 seconds i the default.
+//   void addGpsTimer(String tag, Function timerFunction,
+//       {int durationSeconds = 60}) {
+//     var timer = _gpsTimers.remove(tag);
+//     if (timer != null) {
+//       timer.cancel();
+//     }
+//     var newTimer =
+//         Timer.periodic(Duration(seconds: durationSeconds), (timer) async {
+//       await timerFunction(_lastPosition, _status);
+//     });
+//     _gpsTimers[tag] = newTimer;
+//   }
 
-  /// Stop all available gps timers.
-  void stopAllGpsTimers() {
-    for (var entry in _gpsTimers.entries) {
-      var timer = _gpsTimers.remove(entry.key);
-      if (timer != null) {
-        timer.cancel();
-      }
-    }
-  }
-}
+//   /// Cancel a timer using its [tag].
+//   void stopGpsTimer(String tag) {
+//     var timer = _gpsTimers.remove(tag);
+//     if (timer != null) {
+//       timer.cancel();
+//     }
+//   }
+
+//   /// Stop all available gps timers.
+//   void stopAllGpsTimers() {
+//     for (var entry in _gpsTimers.entries) {
+//       var timer = _gpsTimers.remove(entry.key);
+//       if (timer != null) {
+//         timer.cancel();
+//       }
+//     }
+//   }
+// }

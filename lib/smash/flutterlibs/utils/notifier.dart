@@ -1,4 +1,8 @@
-part of smashlibs;
+// part of smashlibs;
+
+import 'package:dart_hydrologis_utils/dart_hydrologis_utils.dart' as HU;
+import 'package:flutter/material.dart';
+
 /*
  * Copyright (c) 2019-2020. Antonello Andrea (www.hydrologis.com). All rights reserved.
  * Use of this source code is governed by a GPL3 license that can be
